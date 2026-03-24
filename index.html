@@ -59,6 +59,89 @@
             z-index: 0;
         }
 
+        /* ===== TOP NAV BAR ===== */
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 44px;
+            background: rgba(255,255,255,0.82);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-light);
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .top-bar-brand {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--teal-dark);
+            letter-spacing: 0.01em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .top-bar-brand::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--teal);
+        }
+
+        .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .top-bar-user {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-secondary);
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .top-bar-btn {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 500;
+            padding: 5px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--teal);
+            text-decoration: none;
+        }
+
+        .top-bar-btn:hover {
+            background: var(--surface-dim);
+            border-color: var(--teal-muted);
+        }
+
+        .top-bar-btn.logout {
+            color: var(--text-dim);
+            border-color: transparent;
+            background: none;
+            padding: 5px 8px;
+        }
+
+        .top-bar-btn.logout:hover {
+            color: var(--text-secondary);
+            background: var(--surface-dim);
+        }
+
         /* ===== LANDING STATE ===== */
         .landing {
             position: relative;
@@ -68,7 +151,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 40px 20px;
+            padding: 60px 20px 40px;
             transition: opacity 0.4s ease, transform 0.4s ease;
         }
 
@@ -313,7 +396,6 @@
             height: 120px;
         }
 
-        /* Orbiting dots */
         .loading-orbit {
             position: absolute;
             inset: 0;
@@ -335,7 +417,6 @@
 
         @keyframes orbit-spin { to { transform: rotate(360deg); } }
 
-        /* Center icon */
         .loading-icon {
             position: absolute;
             top: 50%;
@@ -364,7 +445,6 @@
             50% { transform: translate(-50%, -50%) scale(1.06); }
         }
 
-        /* Scan line effect */
         .loading-scanline {
             position: absolute;
             left: 10%;
@@ -383,7 +463,6 @@
             100% { top: 80%; opacity: 0; }
         }
 
-        /* Step text */
         .loading-step {
             text-align: center;
             max-width: 300px;
@@ -411,7 +490,6 @@
             animation: text-fade 0.4s ease 0.1s both;
         }
 
-        /* Progress bar */
         .loading-progress {
             width: 200px;
             height: 3px;
@@ -428,7 +506,6 @@
             width: 0%;
         }
 
-        /* Floating particles */
         .loading-particles {
             position: absolute;
             inset: 0;
@@ -467,7 +544,7 @@
             display: none;
             flex-direction: column;
             align-items: center;
-            padding: 32px 20px 60px;
+            padding: 60px 20px 60px;
             animation: fadeUp 0.5s ease;
         }
 
@@ -485,7 +562,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 24px;
+            margin-bottom: 16px;
             width: 100%;
             max-width: 680px;
         }
@@ -544,15 +621,97 @@
             height: 14px;
         }
 
-        /* CV Card */
-        .cv-card {
-            background: var(--surface);
-            border: 1px solid var(--border-light);
-            border-radius: var(--radius-lg);
-            padding: 48px;
+        /* ===== SLUG EDITOR ===== */
+        .slug-editor {
+            display: none;
             width: 100%;
             max-width: 680px;
-            box-shadow: var(--shadow-xl);
+            margin-bottom: 20px;
+            animation: fadeUp 0.3s ease;
+        }
+
+        .slug-editor.active { display: block; }
+
+        .slug-editor-inner {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 10px 14px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .slug-prefix {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--text-dim);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .slug-input {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--teal);
+            border: none;
+            background: none;
+            outline: none;
+            min-width: 80px;
+            flex: 1;
+        }
+
+        .slug-input::placeholder { color: var(--teal-muted); }
+
+        .slug-check-btn {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 500;
+            padding: 5px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: var(--surface-dim);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .slug-check-btn:hover {
+            border-color: var(--teal-muted);
+            color: var(--teal);
+        }
+
+        .slug-status {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            margin-top: 6px;
+            padding-left: 14px;
+            min-height: 16px;
+        }
+
+        .slug-status.available { color: #16a34a; }
+        .slug-status.taken { color: #dc2626; }
+        .slug-status.checking { color: var(--text-dim); }
+
+        /* ===== CV Card — Paper Style ===== */
+        .cv-card {
+            background: var(--surface);
+            border: 1px solid rgba(0,0,0,0.06);
+            border-radius: 4px;
+            padding: 56px 52px;
+            width: 100%;
+            max-width: 680px;
+            /* Multi-layer paper shadow like self.so */
+            box-shadow:
+                0 1px 2px rgba(0,0,0,0.04),
+                0 2px 4px rgba(0,0,0,0.04),
+                0 4px 8px rgba(0,0,0,0.04),
+                0 8px 16px rgba(0,0,0,0.04),
+                0 16px 32px rgba(0,0,0,0.04),
+                0 32px 64px rgba(0,0,0,0.02);
         }
 
         /* CV Header */
@@ -567,10 +726,10 @@
         .cv-header-info { flex: 1; }
 
         .cv-name {
-            font-size: 26px;
+            font-size: 28px;
             font-weight: 800;
-            letter-spacing: -0.02em;
-            line-height: 1.2;
+            letter-spacing: -0.025em;
+            line-height: 1.15;
             color: var(--text);
             margin-bottom: 8px;
         }
@@ -657,55 +816,56 @@
         }
 
         .cv-section-title {
-            font-size: 18px;
+            font-size: 11px;
             font-weight: 700;
-            letter-spacing: -0.01em;
-            color: var(--text);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-muted);
             margin-bottom: 16px;
             padding-bottom: 8px;
             border-bottom: 1px solid var(--border-light);
         }
 
         .cv-about {
-            font-family: var(--font-mono);
-            font-size: 13px;
+            font-size: 14px;
             color: var(--text-secondary);
-            line-height: 1.7;
+            line-height: 1.75;
         }
 
-        /* Experience entries */
+        /* Experience entries — with left accent border */
         .cv-exp-entry {
             margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border-light);
+            padding-left: 16px;
+            border-left: 2px solid var(--teal-muted);
+            position: relative;
         }
 
         .cv-exp-entry:last-child {
             margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
         }
 
         .cv-exp-top {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
             gap: 12px;
         }
 
         .cv-exp-title {
             font-size: 15px;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text);
+            line-height: 1.3;
         }
 
         .cv-exp-date {
             font-family: var(--font-mono);
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-dim);
             white-space: nowrap;
             flex-shrink: 0;
+            padding-top: 2px;
         }
 
         .cv-exp-company {
@@ -716,10 +876,13 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            flex-wrap: wrap;
         }
 
         .cv-exp-location-badge {
-            font-size: 11px;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 500;
             background: var(--surface-dim);
             border: 1px solid var(--border-light);
             border-radius: 4px;
@@ -727,12 +890,34 @@
             color: var(--text-dim);
         }
 
+        /* Experience description as proper bullet list */
         .cv-exp-desc {
-            font-family: var(--font-mono);
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-secondary);
             line-height: 1.7;
-            white-space: pre-line;
+        }
+
+        .cv-exp-desc ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .cv-exp-desc ul li {
+            position: relative;
+            padding-left: 16px;
+            margin-bottom: 4px;
+        }
+
+        .cv-exp-desc ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 9px;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--teal-muted);
         }
 
         /* Education */
@@ -748,7 +933,7 @@
 
         .cv-edu-school {
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text);
             margin-bottom: 2px;
         }
@@ -761,13 +946,14 @@
 
         .cv-edu-date {
             font-family: var(--font-mono);
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-dim);
             white-space: nowrap;
             flex-shrink: 0;
+            padding-top: 2px;
         }
 
-        /* Skills */
+        /* Skills — horizontal pill badges */
         .cv-skills {
             display: flex;
             flex-wrap: wrap;
@@ -778,11 +964,11 @@
             font-family: var(--font-mono);
             font-size: 11px;
             font-weight: 500;
-            background: var(--teal);
-            color: white;
-            border-radius: 6px;
-            padding: 3px 10px;
-            opacity: 0.85;
+            background: var(--surface-dim);
+            color: var(--teal-dark);
+            border: 1px solid var(--border-light);
+            border-radius: 100px;
+            padding: 4px 12px;
         }
 
         /* Footer */
@@ -945,6 +1131,7 @@
             cursor: pointer;
             color: var(--text-dim);
             padding: 4px;
+            font-size: 20px;
         }
         .modal-close:hover { color: var(--text); }
         .modal-tabs {
@@ -1045,7 +1232,7 @@
         @media print {
             body { background: white; }
             body::before { display: none; }
-            .action-bar, .site-footer, .landing, .modal-overlay, .publish-bar { display: none !important; }
+            .top-bar, .action-bar, .site-footer, .landing, .modal-overlay, .publish-bar, .slug-editor { display: none !important; }
             .cv-wrapper { padding: 0; }
             .cv-card {
                 box-shadow: none;
@@ -1055,7 +1242,7 @@
                 max-width: 100%;
             }
             .cv-name { font-size: 22px; }
-            .cv-section-title { font-size: 15px; }
+            .cv-section-title { font-size: 10px; }
             .cv-exp-desc, .cv-about { font-size: 11px; }
             .cv-skill-pill { font-size: 10px; }
             .cv-contacts { display: none; }
@@ -1064,7 +1251,7 @@
 
         /* Responsive */
         @media (max-width: 640px) {
-            .cv-card { padding: 28px 20px; }
+            .cv-card { padding: 32px 24px; }
             .cv-header { flex-direction: column-reverse; align-items: center; text-align: center; }
             .cv-tagline { max-width: 100%; }
             .cv-contacts { justify-content: center; }
@@ -1076,10 +1263,20 @@
             .upload-zone { padding: 36px 20px; }
             .form-row { grid-template-columns: 1fr; }
             .action-bar { flex-wrap: wrap; }
+            .slug-editor-inner { flex-wrap: wrap; }
+            .top-bar-user { max-width: 120px; }
         }
     </style>
 </head>
 <body>
+
+<!-- Top Nav Bar -->
+<div class="top-bar" id="topBar">
+    <div class="top-bar-brand">Pintarnya Free Tools</div>
+    <div class="top-bar-right" id="topBarRight">
+        <button class="top-bar-btn" id="topLoginBtn" style="display:none">Login</button>
+    </div>
+</div>
 
 <!-- Loading Overlay -->
 <div class="loading-overlay" id="loading">
@@ -1233,6 +1430,16 @@ Title | Company | Location | Dates
         </div>
     </div>
 
+    <!-- Slug editor -->
+    <div class="slug-editor" id="slugEditor">
+        <div class="slug-editor-inner">
+            <span class="slug-prefix">pintarnya.site/cv/</span>
+            <input type="text" class="slug-input" id="slugInput" placeholder="your-name" spellcheck="false" autocomplete="off">
+            <button class="slug-check-btn" id="slugCheckBtn">Check</button>
+        </div>
+        <div class="slug-status" id="slugStatus"></div>
+    </div>
+
     <!-- Publish bar (shown after successful publish) -->
     <div class="publish-bar" id="publishBar">
         <div class="publish-bar-inner">
@@ -1251,8 +1458,8 @@ Title | Company | Location | Dates
 <div class="modal-overlay" id="authModal">
     <div class="modal-card" style="position:relative">
         <button class="modal-close" id="authClose">&times;</button>
-        <div class="modal-title">Publish your CV</div>
-        <div class="modal-subtitle">Create a free account to host your CV at pintarnya.site/cv/your-name</div>
+        <div class="modal-title" id="authModalTitle">Publish your CV</div>
+        <div class="modal-subtitle" id="authModalSubtitle">Create a free account to host your CV at pintarnya.site/cv/your-name</div>
         <div class="modal-tabs">
             <button class="modal-tab active" data-tab="register">Register</button>
             <button class="modal-tab" data-tab="login">Login</button>
@@ -1317,17 +1524,65 @@ Title | Company | Location | Dates
     let authToken = localStorage.getItem('pintarnya_cv_token');
     let currentUser = null;
     let publishedSlug = null;
+    let pendingFile = null; // File waiting for auth before processing
+    let authPurpose = 'publish'; // 'upload' or 'publish'
 
     const API_BASE = 'https://pintarnya.site/ai-api';
 
-    // AI proxy config (key is server-side, never exposed in browser)
     const AI_PROXY_URL = API_BASE + '/parse-cv';
     const AI_MODELS = [
-        'nvidia/nemotron-3-super:free',
+        'nvidia/nemotron-3-super-120b-a12b:free',
         'minimax/minimax-m2.5:free',
-        'stepfun/step-3.5-flash:free'
+        'stepfun/step-3.5-flash:free',
+        'qwen/qwen3-coder:free'
     ];
     const USE_AI = true;
+
+    // ===== Top Bar Auth UI =====
+    function updateTopBar() {
+        const right = $('topBarRight');
+        if (currentUser) {
+            const displayName = currentUser.name || currentUser.email || 'User';
+            right.innerHTML = `
+                <span class="top-bar-user">${esc(displayName)}</span>
+                <button class="top-bar-btn logout" id="topLogoutBtn">Logout</button>
+            `;
+            $('topLogoutBtn').addEventListener('click', () => {
+                authToken = null;
+                currentUser = null;
+                localStorage.removeItem('pintarnya_cv_token');
+                updateTopBar();
+            });
+        } else {
+            right.innerHTML = `<button class="top-bar-btn" id="topLoginBtn">Login</button>`;
+            $('topLoginBtn').addEventListener('click', () => {
+                authPurpose = 'login';
+                $('authModalTitle').textContent = 'Login to Pintarnya';
+                $('authModalSubtitle').textContent = 'Create an account or login to publish your CV';
+                openAuthModal();
+            });
+        }
+    }
+
+    function openAuthModal() {
+        const slug = parsedData ? parsedData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') : '';
+        $('authSlug').value = slug;
+        $('authName').value = (parsedData && parsedData.name) ? parsedData.name : '';
+        $('authModal').classList.add('active');
+    }
+
+    // ===== Upload gating — require login =====
+    function isLoggedIn() {
+        return !!(authToken && currentUser);
+    }
+
+    function requireAuthForUpload(file) {
+        pendingFile = file;
+        authPurpose = 'upload';
+        $('authModalTitle').textContent = 'Login to continue';
+        $('authModalSubtitle').textContent = 'Create a free account to parse and preview your CV';
+        openAuthModal();
+    }
 
     // Drag and drop
     uploadZone.addEventListener('dragover', e => {
@@ -1339,12 +1594,28 @@ Title | Company | Location | Dates
         e.preventDefault();
         uploadZone.classList.remove('dragover');
         const file = e.dataTransfer.files[0];
-        if (file && file.type === 'application/pdf') handlePDF(file);
-        else showError('Please upload a PDF file.');
+        if (file && file.type === 'application/pdf') {
+            if (!isLoggedIn()) {
+                requireAuthForUpload(file);
+            } else {
+                handlePDF(file);
+            }
+        } else {
+            showError('Please upload a PDF file.');
+        }
     });
 
     pdfInput.addEventListener('change', e => {
-        if (e.target.files[0]) handlePDF(e.target.files[0]);
+        if (e.target.files[0]) {
+            const file = e.target.files[0];
+            if (!isLoggedIn()) {
+                requireAuthForUpload(file);
+                // Reset input so same file can be re-selected
+                pdfInput.value = '';
+            } else {
+                handlePDF(file);
+            }
+        }
     });
 
     // Manual form toggles
@@ -1396,6 +1667,46 @@ Title | Company | Location | Dates
         URL.revokeObjectURL(url);
     });
 
+    // ===== Slug Editor =====
+    $('slugCheckBtn').addEventListener('click', checkSlug);
+
+    $('slugInput').addEventListener('input', () => {
+        // Normalize slug on input
+        let val = $('slugInput').value.toLowerCase().replace(/[^a-z0-9-]/g, '').replace(/--+/g, '-');
+        $('slugInput').value = val;
+        $('slugStatus').textContent = '';
+        $('slugStatus').className = 'slug-status';
+    });
+
+    async function checkSlug() {
+        const slug = $('slugInput').value.trim();
+        if (!slug) {
+            $('slugStatus').textContent = 'Enter a slug first';
+            $('slugStatus').className = 'slug-status taken';
+            return;
+        }
+        $('slugStatus').textContent = 'Checking...';
+        $('slugStatus').className = 'slug-status checking';
+        $('slugCheckBtn').disabled = true;
+
+        try {
+            const res = await fetch(API_BASE + '/cv/check/' + encodeURIComponent(slug));
+            const data = await res.json();
+            if (data.available) {
+                $('slugStatus').textContent = 'Available';
+                $('slugStatus').className = 'slug-status available';
+            } else {
+                $('slugStatus').textContent = 'Taken — try another';
+                $('slugStatus').className = 'slug-status taken';
+            }
+        } catch (err) {
+            $('slugStatus').textContent = 'Could not check — try again';
+            $('slugStatus').className = 'slug-status taken';
+        } finally {
+            $('slugCheckBtn').disabled = false;
+        }
+    }
+
     // Loading animation steps
     const LOADING_STEPS = [
         { text: 'Reading your PDF...', sub: 'Extracting text content', pct: 5 },
@@ -1425,7 +1736,6 @@ Title | Company | Location | Dates
             if (stepIndex < LOADING_STEPS.length) {
                 updateLoadingStep(LOADING_STEPS[stepIndex]);
             } else {
-                // Hold at last step
                 clearInterval(loadingInterval);
             }
         }, 1800);
@@ -1436,7 +1746,6 @@ Title | Company | Location | Dates
         const subEl = $('loadingSubstep');
         const barEl = $('loadingBar');
 
-        // Trigger re-animation
         textEl.style.animation = 'none';
         subEl.style.animation = 'none';
         void textEl.offsetWidth;
@@ -1453,7 +1762,6 @@ Title | Company | Location | Dates
             clearInterval(loadingInterval);
             loadingInterval = null;
         }
-        // Fill to 100%
         $('loadingBar').style.width = '100%';
     }
 
@@ -1466,6 +1774,12 @@ Title | Company | Location | Dates
     function showCV() {
         landing.classList.add('hidden');
         cvWrapper.classList.add('active');
+        // Show slug editor and auto-fill from name
+        $('slugEditor').classList.add('active');
+        if (parsedData && parsedData.name) {
+            const autoSlug = parsedData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+            $('slugInput').value = autoSlug;
+        }
     }
 
     // PDF Processing
@@ -1493,11 +1807,10 @@ Title | Company | Location | Dates
                 parsedData = parseLinkedInPDF(fullText);
             }
 
-            // If name is missing, use a placeholder — user can still publish/edit
             if (!parsedData.name) parsedData.name = 'Your Name';
 
             stopLoadingAnimation();
-            await new Promise(r => setTimeout(r, 500)); // Brief pause at 100%
+            await new Promise(r => setTimeout(r, 500));
 
             renderCV(parsedData);
             loading.classList.remove('active');
@@ -1509,9 +1822,8 @@ Title | Company | Location | Dates
         }
     }
 
-    // AI-powered parsing via server-side proxy (key never exposed)
+    // AI-powered parsing via server-side proxy
     async function parseWithAI(text) {
-
         for (const model of AI_MODELS) {
             try {
                 console.log(`Trying model: ${model}`);
@@ -1534,7 +1846,6 @@ Title | Company | Location | Dates
                 const json = await res.json();
                 const content = json.choices?.[0]?.message?.content || '';
 
-                // Extract JSON from response (handle possible markdown fences)
                 const jsonMatch = content.match(/\{[\s\S]*\}/);
                 if (!jsonMatch) {
                     console.warn(`Model ${model} returned no JSON, trying next...`);
@@ -1566,12 +1877,11 @@ Title | Company | Location | Dates
             }
         }
 
-        // All models failed — fall back to regex
         console.warn('All AI models failed, falling back to regex parser');
         return parseLinkedInPDF(text);
     }
 
-    // LinkedIn PDF Parser
+    // LinkedIn PDF Parser (regex fallback)
     function parseLinkedInPDF(text) {
         const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
         const fullText = lines.join('\n');
@@ -1588,12 +1898,9 @@ Title | Company | Location | Dates
             skills: []
         };
 
-        // Extract name: usually the first substantial text
         const nameMatch = fullText.match(/^(.+?)(?:\n|$)/);
         if (nameMatch) {
-            // Clean up: name is usually the first line, sometimes preceded by "Contact"
             let name = nameMatch[1].trim();
-            // If starts with common LinkedIn headers, skip
             if (/^(Contact|Page|LinkedIn)/i.test(name)) {
                 const nextLine = lines[1] || '';
                 name = nextLine;
@@ -1601,22 +1908,18 @@ Title | Company | Location | Dates
             data.name = name.replace(/\s+/g, ' ').substring(0, 80);
         }
 
-        // Extract email
         const emailMatch = fullText.match(/[\w.+-]+@[\w-]+\.[\w.]+/);
         if (emailMatch) data.email = emailMatch[0];
 
-        // Extract LinkedIn URL
         const linkedinMatch = fullText.match(/linkedin\.com\/in\/[\w-]+/i);
         if (linkedinMatch) data.linkedin = 'https://www.' + linkedinMatch[0];
 
-        // Extract location (common patterns)
         const locationMatch = fullText.match(/(?:^|\n)\s*([\w\s]+,\s*[\w\s]+(?:,\s*[\w\s]+)?)\s*(?:\n|$)/m);
         if (locationMatch) {
             const loc = locationMatch[1].trim();
             if (loc.length < 60 && /,/.test(loc)) data.location = loc;
         }
 
-        // Section-based parsing
         const sectionMarkers = {
             summary: /\b(Summary|About|Ringkasan|Tentang)\b/i,
             experience: /\b(Experience|Pengalaman)\b/i,
@@ -1624,7 +1927,6 @@ Title | Company | Location | Dates
             skills: /\b(Skills|Top Skills|Keahlian)\b/i,
         };
 
-        // Find section boundaries
         const sections = {};
         const allText = fullText;
 
@@ -1639,30 +1941,24 @@ Title | Company | Location | Dates
             const [key, start] = sortedSections[i];
             const end = i + 1 < sortedSections.length ? sortedSections[i + 1][1] : allText.length;
             const content = allText.substring(start, end);
-
-            // Remove the section header
             const cleaned = content.replace(sectionMarkers[key], '').trim();
 
             switch (key) {
                 case 'summary':
                     data.summary = cleaned.replace(/\s+/g, ' ').substring(0, 1000);
-                    // Use first sentence as tagline if no tagline yet
                     if (!data.tagline) {
                         data.tagline = cleaned.split(/[.!?]/)[0].substring(0, 120);
                     }
                     break;
-
                 case 'experience':
                     data.experience = parseExperienceSection(cleaned);
                     break;
-
                 case 'education':
                     data.education = parseEducationSection(cleaned);
                     break;
-
                 case 'skills':
                     data.skills = cleaned
-                        .split(/[,\n•·]/)
+                        .split(/[,\n\u2022\u00b7]/)
                         .map(s => s.replace(/\s+/g, ' ').trim())
                         .filter(s => s.length > 1 && s.length < 50)
                         .slice(0, 15);
@@ -1670,7 +1966,6 @@ Title | Company | Location | Dates
             }
         }
 
-        // Tagline fallback
         if (!data.tagline && lines.length > 1) {
             data.tagline = lines[1].substring(0, 120);
         }
@@ -1680,8 +1975,7 @@ Title | Company | Location | Dates
 
     function parseExperienceSection(text) {
         const entries = [];
-        // LinkedIn PDFs often have date patterns like "Jan 2020 - Present" or "2020 - 2023"
-        const datePattern = /(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)?\s*\d{4}\s*[-–]\s*(?:(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)?\s*\d{4}|Present|Sekarang)/gi;
+        const datePattern = /(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)?\s*\d{4}\s*[-\u2013]\s*(?:(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)?\s*\d{4}|Present|Sekarang)/gi;
         const chunks = text.split(datePattern);
         const dates = text.match(datePattern) || [];
 
@@ -1698,14 +1992,13 @@ Title | Company | Location | Dates
                     location: lines[2] || '',
                     dates: dates[i] ? dates[i].trim() : '',
                     description: descLines
-                        .filter(l => l.startsWith('-') || l.startsWith('•') || l.length > 20)
-                        .map(l => l.replace(/^[-•]\s*/, ''))
+                        .filter(l => l.startsWith('-') || l.startsWith('\u2022') || l.length > 20)
+                        .map(l => l.replace(/^[-\u2022]\s*/, ''))
                         .join('\n')
                 });
             }
         }
 
-        // Fallback: if no entries parsed, treat as raw text
         if (entries.length === 0 && text.length > 20) {
             entries.push({
                 title: 'Professional Experience',
@@ -1722,7 +2015,7 @@ Title | Company | Location | Dates
     function parseEducationSection(text) {
         const entries = [];
         const lines = text.split(/\n/).map(l => l.trim()).filter(Boolean);
-        const datePattern = /\d{4}\s*[-–]\s*\d{4}/;
+        const datePattern = /\d{4}\s*[-\u2013]\s*\d{4}/;
 
         let current = null;
         for (const line of lines) {
@@ -1740,7 +2033,6 @@ Title | Company | Location | Dates
         }
         if (current) entries.push(current);
 
-        // Fallback
         if (entries.length === 0 && lines.length > 0) {
             entries.push({ school: lines[0], degree: lines[1] || '', dates: lines[2] || '' });
         }
@@ -1760,7 +2052,7 @@ Title | Company | Location | Dates
                 company: headerParts[1] || '',
                 location: headerParts[2] || '',
                 dates: headerParts[3] || '',
-                description: lines.slice(1).map(l => l.replace(/^[-•]\s*/, '')).join('\n')
+                description: lines.slice(1).map(l => l.replace(/^[-\u2022]\s*/, '')).join('\n')
             };
         }).filter(Boolean);
     }
@@ -1773,7 +2065,7 @@ Title | Company | Location | Dates
         }).filter(e => e.degree || e.school);
     }
 
-    // Render CV
+    // Render CV with paper style
     function renderCV(data) {
         const initials = data.name.split(' ').map(w => w[0]).join('').substring(0, 3).toUpperCase();
 
@@ -1792,6 +2084,16 @@ Title | Company | Location | Dates
         let expHTML = '';
         for (const exp of data.experience) {
             const locationBadge = exp.location ? `<span class="cv-exp-location-badge">${esc(exp.location)}</span>` : '';
+            // Build description as bullet list
+            let descHTML = '';
+            if (exp.description) {
+                const descLines = exp.description.split('\n').map(l => l.trim()).filter(Boolean);
+                if (descLines.length > 1 || (descLines.length === 1 && descLines[0].length < 200)) {
+                    descHTML = '<div class="cv-exp-desc"><ul>' + descLines.map(l => `<li>${esc(l)}</li>`).join('') + '</ul></div>';
+                } else {
+                    descHTML = `<div class="cv-exp-desc">${esc(exp.description)}</div>`;
+                }
+            }
             expHTML += `
                 <div class="cv-exp-entry">
                     <div class="cv-exp-top">
@@ -1799,7 +2101,7 @@ Title | Company | Location | Dates
                         <div class="cv-exp-date">${esc(exp.dates)}</div>
                     </div>
                     <div class="cv-exp-company">${esc(exp.company)} ${locationBadge}</div>
-                    ${exp.description ? `<div class="cv-exp-desc">${esc(exp.description)}</div>` : ''}
+                    ${descHTML}
                 </div>
             `;
         }
@@ -1888,18 +2190,27 @@ Title | Company | Location | Dates
     $('authClose').addEventListener('click', () => authModal.classList.remove('active'));
     authModal.addEventListener('click', e => { if (e.target === authModal) authModal.classList.remove('active'); });
 
+    // After successful auth, process pending file if any
+    function onAuthSuccess() {
+        updateTopBar();
+        authModal.classList.remove('active');
+        if (pendingFile && authPurpose === 'upload') {
+            const file = pendingFile;
+            pendingFile = null;
+            handlePDF(file);
+        }
+    }
+
     // Publish button
     $('publishBtn').addEventListener('click', () => {
         if (!parsedData) return;
-        if (authToken) {
-            // Already logged in — publish directly
-            publishCV();
+        if (authToken && currentUser) {
+            publishCV($('slugInput').value.trim() || undefined);
         } else {
-            // Show auth modal
-            const slug = parsedData.name ? parsedData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') : '';
-            $('authSlug').value = slug;
-            $('authName').value = parsedData.name || '';
-            authModal.classList.add('active');
+            authPurpose = 'publish';
+            $('authModalTitle').textContent = 'Publish your CV';
+            $('authModalSubtitle').textContent = 'Create a free account to host your CV at pintarnya.site/cv/your-name';
+            openAuthModal();
         }
     });
 
@@ -1928,8 +2239,13 @@ Title | Company | Location | Dates
             authToken = data.token;
             currentUser = data.user;
             localStorage.setItem('pintarnya_cv_token', authToken);
-            authModal.classList.remove('active');
-            await publishCV(slug);
+
+            if (authPurpose === 'publish' && parsedData) {
+                onAuthSuccess();
+                await publishCV(slug);
+            } else {
+                onAuthSuccess();
+            }
         } catch (err) {
             showAuthError(err.message);
         } finally {
@@ -1960,8 +2276,13 @@ Title | Company | Location | Dates
             authToken = data.token;
             currentUser = data.user;
             localStorage.setItem('pintarnya_cv_token', authToken);
-            authModal.classList.remove('active');
-            await publishCV();
+
+            if (authPurpose === 'publish' && parsedData) {
+                onAuthSuccess();
+                await publishCV();
+            } else {
+                onAuthSuccess();
+            }
         } catch (err) {
             showAuthError(err.message);
         } finally {
@@ -1999,11 +2320,15 @@ Title | Company | Location | Dates
             const data = await res.json();
 
             if (res.status === 401) {
-                // Token expired
                 authToken = null;
+                currentUser = null;
                 localStorage.removeItem('pintarnya_cv_token');
                 $('publishBar').classList.remove('active');
-                authModal.classList.add('active');
+                updateTopBar();
+                authPurpose = 'publish';
+                $('authModalTitle').textContent = 'Publish your CV';
+                $('authModalSubtitle').textContent = 'Session expired. Please login again.';
+                openAuthModal();
                 return;
             }
 
@@ -2015,7 +2340,9 @@ Title | Company | Location | Dates
             publishStatus.textContent = 'Published! Your CV is live.';
             publishStatus.className = 'publish-status success';
 
-            // Change publish button to "Update"
+            // Update slug input to reflect published slug
+            $('slugInput').value = data.slug;
+
             $('publishBtn').innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> Update CV`;
         } catch (err) {
             publishStatus.textContent = err.message;
@@ -2033,9 +2360,12 @@ Title | Company | Location | Dates
         });
     });
 
-    // Check if user is already logged in on page load
+    // Check auth on page load
     async function checkAuth() {
-        if (!authToken) return;
+        if (!authToken) {
+            updateTopBar();
+            return;
+        }
         try {
             const res = await fetch(API_BASE + '/auth/me', {
                 headers: { 'Authorization': 'Bearer ' + authToken }
@@ -2046,8 +2376,10 @@ Title | Company | Location | Dates
             if (data.cv) publishedSlug = data.cv.slug;
         } catch {
             authToken = null;
+            currentUser = null;
             localStorage.removeItem('pintarnya_cv_token');
         }
+        updateTopBar();
     }
     checkAuth();
 
@@ -2064,11 +2396,11 @@ Title | Company | Location | Dates
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#F0F7FC;--surface:#ffffff;--border:#D4E8F5;--border-light:#E4F0F8;--teal:#2A83FD;--teal-dark:#0255CA;--teal-muted:#9EC5F5;--text:#0A1929;--text-secondary:#3B5775;--text-muted:#6B8DB0;--text-dim:#94B3CF;--font-sans:'Plus Jakarta Sans',sans-serif;--font-mono:'JetBrains Mono',monospace}
-body{background:var(--bg);color:var(--text);font-family:var(--font-sans);line-height:1.6;display:flex;justify-content:center;padding:40px 20px;-webkit-font-smoothing:antialiased}
-.cv-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:48px;width:100%;max-width:680px;box-shadow:0 8px 32px rgba(0,50,100,0.08)}
+body{background:var(--bg);color:var(--text);font-family:var(--font-sans);line-height:1.6;display:flex;flex-direction:column;align-items:center;padding:40px 20px;-webkit-font-smoothing:antialiased}
+.cv-card{background:var(--surface);border:1px solid rgba(0,0,0,0.06);border-radius:4px;padding:56px 52px;width:100%;max-width:680px;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 2px 4px rgba(0,0,0,0.04),0 4px 8px rgba(0,0,0,0.04),0 8px 16px rgba(0,0,0,0.04),0 16px 32px rgba(0,0,0,0.04),0 32px 64px rgba(0,0,0,0.02)}
 .cv-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:32px;gap:20px}
 .cv-header-info{flex:1}
-.cv-name{font-size:26px;font-weight:800;letter-spacing:-0.02em;line-height:1.2;margin-bottom:8px}
+.cv-name{font-size:28px;font-weight:800;letter-spacing:-0.025em;line-height:1.15;margin-bottom:8px}
 .cv-tagline{font-family:var(--font-mono);font-size:13px;color:var(--text-muted);max-width:380px;line-height:1.5;margin-bottom:12px}
 .cv-location{display:inline-flex;align-items:center;gap:4px;font-family:var(--font-mono);font-size:12px;color:var(--text-dim)}
 .cv-location svg{width:12px;height:12px}
@@ -2079,27 +2411,30 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-sans);line-he
 .cv-avatar{width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg,var(--teal-muted),#D4EDFC);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:var(--teal-dark);flex-shrink:0;border:3px solid var(--surface);box-shadow:0 4px 16px rgba(0,50,100,0.08)}
 .cv-section{margin-bottom:28px}
 .cv-section:last-child{margin-bottom:0}
-.cv-section-title{font-size:18px;font-weight:700;letter-spacing:-0.01em;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border-light)}
-.cv-about{font-family:var(--font-mono);font-size:13px;color:var(--text-secondary);line-height:1.7}
-.cv-exp-entry{margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border-light)}
-.cv-exp-entry:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
-.cv-exp-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;gap:12px}
-.cv-exp-title{font-size:15px;font-weight:600}
-.cv-exp-date{font-family:var(--font-mono);font-size:12px;color:var(--text-dim);white-space:nowrap}
-.cv-exp-company{font-family:var(--font-mono);font-size:13px;color:var(--text-muted);margin-bottom:8px;display:flex;align-items:center;gap:8px}
-.cv-exp-location-badge{font-size:11px;background:#F0F7FC;border:1px solid var(--border-light);border-radius:4px;padding:1px 7px;color:var(--text-dim)}
-.cv-exp-desc{font-family:var(--font-mono);font-size:12px;color:var(--text-secondary);line-height:1.7;white-space:pre-line}
+.cv-section-title{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border-light)}
+.cv-about{font-size:14px;color:var(--text-secondary);line-height:1.75}
+.cv-exp-entry{margin-bottom:20px;padding-left:16px;border-left:2px solid var(--teal-muted)}
+.cv-exp-entry:last-child{margin-bottom:0}
+.cv-exp-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:2px;gap:12px}
+.cv-exp-title{font-size:15px;font-weight:700;line-height:1.3}
+.cv-exp-date{font-family:var(--font-mono);font-size:11px;color:var(--text-dim);white-space:nowrap;padding-top:2px}
+.cv-exp-company{font-family:var(--font-mono);font-size:13px;color:var(--text-muted);margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.cv-exp-location-badge{font-family:var(--font-mono);font-size:10px;font-weight:500;background:#F0F7FC;border:1px solid var(--border-light);border-radius:4px;padding:1px 7px;color:var(--text-dim)}
+.cv-exp-desc{font-size:13px;color:var(--text-secondary);line-height:1.7}
+.cv-exp-desc ul{list-style:none;padding:0;margin:0}
+.cv-exp-desc ul li{position:relative;padding-left:16px;margin-bottom:4px}
+.cv-exp-desc ul li::before{content:'';position:absolute;left:0;top:9px;width:4px;height:4px;border-radius:50%;background:var(--teal-muted)}
 .cv-edu-entry{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;gap:12px}
 .cv-edu-entry:last-child{margin-bottom:0}
-.cv-edu-school{font-size:14px;font-weight:600;margin-bottom:2px}
+.cv-edu-school{font-size:14px;font-weight:700;margin-bottom:2px}
 .cv-edu-degree{font-family:var(--font-mono);font-size:12px;color:var(--text-muted)}
-.cv-edu-date{font-family:var(--font-mono);font-size:12px;color:var(--text-dim);white-space:nowrap}
+.cv-edu-date{font-family:var(--font-mono);font-size:11px;color:var(--text-dim);white-space:nowrap;padding-top:2px}
 .cv-skills{display:flex;flex-wrap:wrap;gap:6px}
-.cv-skill-pill{font-family:var(--font-mono);font-size:11px;font-weight:500;background:var(--teal);color:white;border-radius:6px;padding:3px 10px;opacity:0.85}
+.cv-skill-pill{font-family:var(--font-mono);font-size:11px;font-weight:500;background:#F0F7FC;color:var(--teal-dark);border:1px solid var(--border-light);border-radius:100px;padding:4px 12px}
 .footer{text-align:center;margin-top:32px;font-family:var(--font-mono);font-size:11px;color:var(--text-dim)}
 .footer a{color:var(--teal);text-decoration:none}
 @media print{body{padding:0;background:white}.cv-card{box-shadow:none;border:none;border-radius:0;padding:24px;max-width:100%}.cv-contacts{display:none}.cv-avatar{width:64px;height:64px;font-size:20px}.footer{display:none}}
-@media(max-width:640px){.cv-card{padding:28px 20px}.cv-header{flex-direction:column-reverse;align-items:center;text-align:center}.cv-contacts{justify-content:center}.cv-exp-top,.cv-edu-entry{flex-direction:column;gap:2px}}
+@media(max-width:640px){.cv-card{padding:32px 24px}.cv-header{flex-direction:column-reverse;align-items:center;text-align:center}.cv-contacts{justify-content:center}.cv-exp-top,.cv-edu-entry{flex-direction:column;gap:2px}}
 </style>
 </head>
 <body>
