@@ -952,9 +952,13 @@ Title | Company | Location | Dates
 
     let parsedData = null;
 
-    // OpenRouter config — replace with your API key
-    const OPENROUTER_API_KEY = ''; // Set your key here
-    const OPENROUTER_MODEL = 'nvidia/nemotron-3-super:free';
+    // OpenRouter config
+    const OPENROUTER_API_KEY = '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';
+    const OPENROUTER_MODELS = [
+        'nvidia/nemotron-3-super:free',
+        'minimax/minimax-m2.5:free',
+        'stepfun/step-3.5-flash:free'
+    ];
     const USE_AI = !!OPENROUTER_API_KEY;
 
     // Drag and drop
@@ -1072,7 +1076,7 @@ Title | Company | Location | Dates
         }
     }
 
-    // AI-powered parsing via OpenRouter
+    // AI-powered parsing via OpenRouter (rotates through free models)
     async function parseWithAI(text) {
         const prompt = `You are a CV parser. Extract structured data from this LinkedIn PDF text and return ONLY valid JSON, no markdown fences, no explanation.
 
@@ -1108,56 +1112,69 @@ If a field is not found, use an empty string or empty array. For experience desc
 LinkedIn PDF text:
 ${text.substring(0, 8000)}`;
 
-        try {
-            const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
-                    'Content-Type': 'application/json',
-                    'HTTP-Referer': 'https://pintarnya.site',
-                    'X-Title': 'Pintarnya LinkedIn CV'
-                },
-                body: JSON.stringify({
-                    model: OPENROUTER_MODEL,
-                    messages: [{ role: 'user', content: prompt }],
-                    temperature: 0.1,
-                    max_tokens: 4000
-                })
-            });
+        for (const model of OPENROUTER_MODELS) {
+            try {
+                console.log(`Trying model: ${model}`);
+                const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+                        'Content-Type': 'application/json',
+                        'HTTP-Referer': 'https://pintarnya.site',
+                        'X-Title': 'Pintarnya LinkedIn CV'
+                    },
+                    body: JSON.stringify({
+                        model,
+                        messages: [{ role: 'user', content: prompt }],
+                        temperature: 0.1,
+                        max_tokens: 4000
+                    })
+                });
 
-            if (!res.ok) {
-                console.warn('AI parsing failed, falling back to regex parser');
-                return parseLinkedInPDF(text);
+                if (!res.ok) {
+                    console.warn(`Model ${model} returned ${res.status}, trying next...`);
+                    continue;
+                }
+
+                const json = await res.json();
+                const content = json.choices?.[0]?.message?.content || '';
+
+                // Extract JSON from response (handle possible markdown fences)
+                const jsonMatch = content.match(/\{[\s\S]*\}/);
+                if (!jsonMatch) {
+                    console.warn(`Model ${model} returned no JSON, trying next...`);
+                    continue;
+                }
+
+                const parsed = JSON.parse(jsonMatch[0]);
+
+                // Validate minimum fields
+                if (!parsed.name) {
+                    console.warn(`Model ${model} returned empty name, trying next...`);
+                    continue;
+                }
+
+                console.log(`Success with model: ${model}`);
+                return {
+                    name: parsed.name || '',
+                    tagline: parsed.tagline || '',
+                    location: parsed.location || '',
+                    email: parsed.email || '',
+                    linkedin: parsed.linkedin || '',
+                    summary: parsed.summary || '',
+                    experience: Array.isArray(parsed.experience) ? parsed.experience : [],
+                    education: Array.isArray(parsed.education) ? parsed.education : [],
+                    skills: Array.isArray(parsed.skills) ? parsed.skills : []
+                };
+            } catch (err) {
+                console.warn(`Model ${model} error:`, err.message);
+                continue;
             }
-
-            const json = await res.json();
-            const content = json.choices?.[0]?.message?.content || '';
-
-            // Extract JSON from response (handle possible markdown fences)
-            const jsonMatch = content.match(/\{[\s\S]*\}/);
-            if (!jsonMatch) {
-                console.warn('AI returned no JSON, falling back to regex parser');
-                return parseLinkedInPDF(text);
-            }
-
-            const parsed = JSON.parse(jsonMatch[0]);
-
-            // Validate minimum fields
-            return {
-                name: parsed.name || '',
-                tagline: parsed.tagline || '',
-                location: parsed.location || '',
-                email: parsed.email || '',
-                linkedin: parsed.linkedin || '',
-                summary: parsed.summary || '',
-                experience: Array.isArray(parsed.experience) ? parsed.experience : [],
-                education: Array.isArray(parsed.education) ? parsed.education : [],
-                skills: Array.isArray(parsed.skills) ? parsed.skills : []
-            };
-        } catch (err) {
-            console.warn('AI parsing error:', err, 'falling back to regex parser');
-            return parseLinkedInPDF(text);
         }
+
+        // All models failed — fall back to regex
+        console.warn('All AI models failed, falling back to regex parser');
+        return parseLinkedInPDF(text);
     }
 
     // LinkedIn PDF Parser
