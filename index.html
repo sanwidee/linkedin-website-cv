@@ -952,14 +952,14 @@ Title | Company | Location | Dates
 
     let parsedData = null;
 
-    // OpenRouter config
-    const OPENROUTER_API_KEY = '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';
-    const OPENROUTER_MODELS = [
+    // AI proxy config (key is server-side, never exposed in browser)
+    const AI_PROXY_URL = 'https://pintarnya.site/ai-api/parse-cv';
+    const AI_MODELS = [
         'nvidia/nemotron-3-super:free',
         'minimax/minimax-m2.5:free',
         'stepfun/step-3.5-flash:free'
     ];
-    const USE_AI = !!OPENROUTER_API_KEY;
+    const USE_AI = true;
 
     // Drag and drop
     uploadZone.addEventListener('dragover', e => {
@@ -1076,60 +1076,22 @@ Title | Company | Location | Dates
         }
     }
 
-    // AI-powered parsing via OpenRouter (rotates through free models)
+    // AI-powered parsing via server-side proxy (key never exposed)
     async function parseWithAI(text) {
-        const prompt = `You are a CV parser. Extract structured data from this LinkedIn PDF text and return ONLY valid JSON, no markdown fences, no explanation.
 
-Return this exact JSON structure:
-{
-  "name": "Full Name",
-  "tagline": "Professional headline or one-line summary",
-  "location": "City, Country",
-  "email": "email@example.com",
-  "linkedin": "https://linkedin.com/in/username",
-  "summary": "Professional summary paragraph",
-  "experience": [
-    {
-      "title": "Job Title",
-      "company": "Company Name",
-      "location": "City",
-      "dates": "Jan 2020 - Present",
-      "description": "- Achievement 1\\n- Achievement 2"
-    }
-  ],
-  "education": [
-    {
-      "school": "University Name",
-      "degree": "Degree and Field",
-      "dates": "2016 - 2020"
-    }
-  ],
-  "skills": ["Skill 1", "Skill 2", "Skill 3"]
-}
-
-If a field is not found, use an empty string or empty array. For experience descriptions, preserve bullet points as "- item" separated by newlines. Order experience by most recent first.
-
-LinkedIn PDF text:
-${text.substring(0, 8000)}`;
-
-        for (const model of OPENROUTER_MODELS) {
+        for (const model of AI_MODELS) {
             try {
                 console.log(`Trying model: ${model}`);
-                const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+                const res = await fetch(AI_PROXY_URL, {
                     method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
-                        'Content-Type': 'application/json',
-                        'HTTP-Referer': 'https://pintarnya.site',
-                        'X-Title': 'Pintarnya LinkedIn CV'
-                    },
-                    body: JSON.stringify({
-                        model,
-                        messages: [{ role: 'user', content: prompt }],
-                        temperature: 0.1,
-                        max_tokens: 4000
-                    })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: text.substring(0, 8000), model })
                 });
+
+                if (res.status === 429) {
+                    showError('Rate limited. Please wait a moment and try again.');
+                    return parseLinkedInPDF(text);
+                }
 
                 if (!res.ok) {
                     console.warn(`Model ${model} returned ${res.status}, trying next...`);
@@ -1148,7 +1110,6 @@ ${text.substring(0, 8000)}`;
 
                 const parsed = JSON.parse(jsonMatch[0]);
 
-                // Validate minimum fields
                 if (!parsed.name) {
                     console.warn(`Model ${model} returned empty name, trying next...`);
                     continue;
