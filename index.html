@@ -1893,7 +1893,14 @@ Title | Company | Location | Dates
             if (stepIndex < LOADING_STEPS.length) {
                 updateLoadingStep(LOADING_STEPS[stepIndex]);
             } else {
-                clearInterval(loadingInterval);
+                // Loop back with extra "still working" messages so it never looks stuck
+                const extraSteps = [
+                    { text: 'Still processing...', sub: 'AI models can take up to 60 seconds', pct: 97 },
+                    { text: 'Refining your profile...', sub: 'Almost done, hang tight', pct: 98 },
+                    { text: 'Finalizing output...', sub: 'Structuring your CV data', pct: 99 },
+                ];
+                const extraIdx = (stepIndex - LOADING_STEPS.length) % extraSteps.length;
+                updateLoadingStep(extraSteps[extraIdx]);
             }
         }, 1800);
     }
