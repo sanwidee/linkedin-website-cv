@@ -1117,7 +1117,7 @@
     <div class="landing-header">
         <div class="brand-badge">Pintarnya Free Tools</div>
         <h1 class="landing-title">LinkedIn to<br><em>Website CV</em></h1>
-        <p class="landing-subtitle">Upload your LinkedIn PDF export and get a beautiful, hosted CV website in seconds. Free forever.</p>
+        <p class="landing-subtitle">Upload any CV or resume PDF and get a beautiful, hosted website in seconds. Free forever.</p>
     </div>
 
     <div class="upload-card">
@@ -1126,8 +1126,8 @@
             <div class="upload-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="12" y2="12"/><line x1="15" y1="15" x2="12" y2="12"/></svg>
             </div>
-            <div class="upload-text">Drop your LinkedIn PDF here</div>
-            <div class="upload-hint">or click to browse &middot; PDF export from LinkedIn</div>
+            <div class="upload-text">Drop your CV / resume PDF here</div>
+            <div class="upload-hint">or click to browse &middot; any CV or resume PDF works</div>
         </div>
 
         <div class="error-msg" id="errorMsg"></div>
@@ -1493,9 +1493,8 @@ Title | Company | Location | Dates
                 parsedData = parseLinkedInPDF(fullText);
             }
 
-            if (!parsedData.name) {
-                throw new Error('Could not extract name from PDF. Try the manual form instead.');
-            }
+            // If name is missing, use a placeholder — user can still publish/edit
+            if (!parsedData.name) parsedData.name = 'Your Name';
 
             stopLoadingAnimation();
             await new Promise(r => setTimeout(r, 500)); // Brief pause at 100%
