@@ -901,11 +901,151 @@
 
         .error-msg.active { display: block; }
 
+        /* Auth Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 25, 41, 0.5);
+            backdrop-filter: blur(6px);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 36px 32px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: var(--shadow-xl);
+            animation: fadeUp 0.3s ease;
+        }
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 4px;
+        }
+        .modal-subtitle {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-dim);
+            padding: 4px;
+        }
+        .modal-close:hover { color: var(--text); }
+        .modal-tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .modal-tab {
+            flex: 1;
+            padding: 8px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 500;
+            border: none;
+            background: var(--surface-dim);
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .modal-tab.active {
+            background: var(--teal);
+            color: white;
+        }
+        .auth-form { display: none; }
+        .auth-form.active { display: block; }
+        .auth-error {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: #d44;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 6px;
+            padding: 8px 12px;
+            margin-bottom: 12px;
+            display: none;
+        }
+        .auth-error.active { display: block; }
+
+        /* Publish bar */
+        .publish-bar {
+            display: none;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 16px 20px;
+            width: 100%;
+            max-width: 680px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
+            animation: fadeUp 0.3s ease;
+        }
+        .publish-bar.active { display: block; }
+        .publish-bar-inner {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .publish-url {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--text-secondary);
+            background: var(--surface-dim);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 8px 12px;
+            overflow: hidden;
+        }
+        .publish-url-prefix {
+            color: var(--text-dim);
+            flex-shrink: 0;
+        }
+        .publish-url-slug {
+            color: var(--teal);
+            font-weight: 600;
+        }
+        .publish-url a {
+            color: var(--teal);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .publish-url a:hover { text-decoration: underline; }
+        .publish-status {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-dim);
+            margin-top: 8px;
+        }
+        .publish-status.success { color: #16a34a; }
+
         /* Print styles */
         @media print {
             body { background: white; }
             body::before { display: none; }
-            .action-bar, .site-footer, .landing { display: none !important; }
+            .action-bar, .site-footer, .landing, .modal-overlay, .publish-bar { display: none !important; }
             .cv-wrapper { padding: 0; }
             .cv-card {
                 box-shadow: none;
@@ -977,7 +1117,7 @@
     <div class="landing-header">
         <div class="brand-badge">Pintarnya Free Tools</div>
         <h1 class="landing-title">LinkedIn to<br><em>Website CV</em></h1>
-        <p class="landing-subtitle">Upload your LinkedIn PDF export and get a beautiful, shareable CV website in seconds. Free, no sign-up.</p>
+        <p class="landing-subtitle">Upload your LinkedIn PDF export and get a beautiful, hosted CV website in seconds. Free forever.</p>
     </div>
 
     <div class="upload-card">
@@ -1064,7 +1204,7 @@ Title | Company | Location | Dates
     <div class="steps">
         <div class="step"><span class="step-num">1</span> Upload PDF</div>
         <div class="step"><span class="step-num">2</span> Preview CV</div>
-        <div class="step"><span class="step-num">3</span> Download</div>
+        <div class="step"><span class="step-num">3</span> Publish</div>
     </div>
 </div>
 
@@ -1086,11 +1226,73 @@ Title | Company | Location | Dates
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 Download HTML
             </button>
+            <button class="btn btn-primary" id="publishBtn" style="background:#16a34a;border-color:#16a34a;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                Publish CV
+            </button>
         </div>
+    </div>
+
+    <!-- Publish bar (shown after successful publish) -->
+    <div class="publish-bar" id="publishBar">
+        <div class="publish-bar-inner">
+            <div class="publish-url" id="publishUrl"></div>
+            <button class="btn btn-ghost" id="copyUrlBtn" style="flex-shrink:0">Copy</button>
+        </div>
+        <div class="publish-status" id="publishStatus"></div>
     </div>
 
     <div class="cv-card" id="cvCard">
         <!-- Populated by JS -->
+    </div>
+</div>
+
+<!-- Auth Modal -->
+<div class="modal-overlay" id="authModal">
+    <div class="modal-card" style="position:relative">
+        <button class="modal-close" id="authClose">&times;</button>
+        <div class="modal-title">Publish your CV</div>
+        <div class="modal-subtitle">Create a free account to host your CV at pintarnya.site/cv/your-name</div>
+        <div class="modal-tabs">
+            <button class="modal-tab active" data-tab="register">Register</button>
+            <button class="modal-tab" data-tab="login">Login</button>
+        </div>
+        <div class="auth-error" id="authError"></div>
+
+        <div class="auth-form active" id="registerForm">
+            <div class="form-group">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-input" id="authName" placeholder="Your full name">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-input" id="authEmail" placeholder="you@email.com">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-input" id="authPassword" placeholder="Min 6 characters">
+            </div>
+            <div class="form-group" style="margin-bottom:8px">
+                <label class="form-label">CV URL slug</label>
+                <div class="publish-url" style="margin:0">
+                    <span class="publish-url-prefix">pintarnya.site/cv/</span>
+                    <input type="text" id="authSlug" style="border:none;background:none;font-family:var(--font-mono);font-size:13px;color:var(--teal);font-weight:600;outline:none;width:140px;padding:0" placeholder="your-name">
+                </div>
+            </div>
+            <button class="btn btn-primary" id="authRegisterBtn" style="width:100%;justify-content:center;margin-top:16px">Create Account & Publish</button>
+        </div>
+
+        <div class="auth-form" id="loginForm">
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-input" id="loginEmail" placeholder="you@email.com">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-input" id="loginPassword" placeholder="Your password">
+            </div>
+            <button class="btn btn-primary" id="authLoginBtn" style="width:100%;justify-content:center;margin-top:16px">Login & Publish</button>
+        </div>
     </div>
 </div>
 
@@ -1112,9 +1314,14 @@ Title | Company | Location | Dates
     const manualForm = $('manualForm');
 
     let parsedData = null;
+    let authToken = localStorage.getItem('pintarnya_cv_token');
+    let currentUser = null;
+    let publishedSlug = null;
+
+    const API_BASE = 'https://pintarnya.site/ai-api';
 
     // AI proxy config (key is server-side, never exposed in browser)
-    const AI_PROXY_URL = 'https://pintarnya.site/ai-api/parse-cv';
+    const AI_PROXY_URL = API_BASE + '/parse-cv';
     const AI_MODELS = [
         'nvidia/nemotron-3-super:free',
         'minimax/minimax-m2.5:free',
@@ -1663,6 +1870,187 @@ Title | Company | Location | Dates
         el.textContent = str;
         return el.innerHTML;
     }
+
+    // ===== Auth & Publish =====
+    const authModal = $('authModal');
+    const authError = $('authError');
+
+    // Tab switching
+    document.querySelectorAll('.modal-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            $('registerForm').classList.toggle('active', tab.dataset.tab === 'register');
+            $('loginForm').classList.toggle('active', tab.dataset.tab === 'login');
+            authError.classList.remove('active');
+        });
+    });
+
+    $('authClose').addEventListener('click', () => authModal.classList.remove('active'));
+    authModal.addEventListener('click', e => { if (e.target === authModal) authModal.classList.remove('active'); });
+
+    // Publish button
+    $('publishBtn').addEventListener('click', () => {
+        if (!parsedData) return;
+        if (authToken) {
+            // Already logged in — publish directly
+            publishCV();
+        } else {
+            // Show auth modal
+            const slug = parsedData.name ? parsedData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') : '';
+            $('authSlug').value = slug;
+            $('authName').value = parsedData.name || '';
+            authModal.classList.add('active');
+        }
+    });
+
+    // Register
+    $('authRegisterBtn').addEventListener('click', async () => {
+        const name = $('authName').value.trim();
+        const email = $('authEmail').value.trim();
+        const password = $('authPassword').value;
+        const slug = $('authSlug').value.trim();
+
+        if (!email || !password) return showAuthError('Email and password required');
+        if (password.length < 6) return showAuthError('Password must be at least 6 characters');
+
+        $('authRegisterBtn').disabled = true;
+        $('authRegisterBtn').textContent = 'Creating...';
+
+        try {
+            const res = await fetch(API_BASE + '/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password, name })
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || 'Registration failed');
+
+            authToken = data.token;
+            currentUser = data.user;
+            localStorage.setItem('pintarnya_cv_token', authToken);
+            authModal.classList.remove('active');
+            await publishCV(slug);
+        } catch (err) {
+            showAuthError(err.message);
+        } finally {
+            $('authRegisterBtn').disabled = false;
+            $('authRegisterBtn').textContent = 'Create Account & Publish';
+        }
+    });
+
+    // Login
+    $('authLoginBtn').addEventListener('click', async () => {
+        const email = $('loginEmail').value.trim();
+        const password = $('loginPassword').value;
+
+        if (!email || !password) return showAuthError('Email and password required');
+
+        $('authLoginBtn').disabled = true;
+        $('authLoginBtn').textContent = 'Logging in...';
+
+        try {
+            const res = await fetch(API_BASE + '/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || 'Login failed');
+
+            authToken = data.token;
+            currentUser = data.user;
+            localStorage.setItem('pintarnya_cv_token', authToken);
+            authModal.classList.remove('active');
+            await publishCV();
+        } catch (err) {
+            showAuthError(err.message);
+        } finally {
+            $('authLoginBtn').disabled = false;
+            $('authLoginBtn').textContent = 'Login & Publish';
+        }
+    });
+
+    function showAuthError(msg) {
+        authError.textContent = msg;
+        authError.classList.add('active');
+    }
+
+    async function publishCV(slugOverride) {
+        if (!parsedData || !authToken) return;
+
+        const publishStatus = $('publishStatus');
+        publishStatus.textContent = 'Publishing...';
+        publishStatus.className = 'publish-status';
+        $('publishBar').classList.add('active');
+
+        try {
+            const body = { cvData: parsedData };
+            if (slugOverride) body.slug = slugOverride;
+
+            const res = await fetch(API_BASE + '/cv', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + authToken
+                },
+                body: JSON.stringify(body)
+            });
+
+            const data = await res.json();
+
+            if (res.status === 401) {
+                // Token expired
+                authToken = null;
+                localStorage.removeItem('pintarnya_cv_token');
+                $('publishBar').classList.remove('active');
+                authModal.classList.add('active');
+                return;
+            }
+
+            if (!res.ok) throw new Error(data.error || 'Publish failed');
+
+            publishedSlug = data.slug;
+            const fullUrl = 'https://pintarnya.site/cv/' + data.slug;
+            $('publishUrl').innerHTML = `<a href="${fullUrl}" target="_blank">${fullUrl}</a>`;
+            publishStatus.textContent = 'Published! Your CV is live.';
+            publishStatus.className = 'publish-status success';
+
+            // Change publish button to "Update"
+            $('publishBtn').innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> Update CV`;
+        } catch (err) {
+            publishStatus.textContent = err.message;
+            publishStatus.className = 'publish-status';
+        }
+    }
+
+    // Copy URL button
+    $('copyUrlBtn').addEventListener('click', () => {
+        if (!publishedSlug) return;
+        const url = 'https://pintarnya.site/cv/' + publishedSlug;
+        navigator.clipboard.writeText(url).then(() => {
+            $('copyUrlBtn').textContent = 'Copied!';
+            setTimeout(() => $('copyUrlBtn').textContent = 'Copy', 2000);
+        });
+    });
+
+    // Check if user is already logged in on page load
+    async function checkAuth() {
+        if (!authToken) return;
+        try {
+            const res = await fetch(API_BASE + '/auth/me', {
+                headers: { 'Authorization': 'Bearer ' + authToken }
+            });
+            if (!res.ok) throw new Error();
+            const data = await res.json();
+            currentUser = data.user;
+            if (data.cv) publishedSlug = data.cv.slug;
+        } catch {
+            authToken = null;
+            localStorage.removeItem('pintarnya_cv_token');
+        }
+    }
+    checkAuth();
 
     // Generate standalone HTML for download
     function generateStandaloneHTML(data) {
