@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LinkedIn to Website CV — Pintarnya Free Tools</title>
+    <title>LinkedIn to Website CV</title>
     <meta name="description" content="Transform your LinkedIn profile into a beautiful website CV. Free, instant, no sign-up required.">
     <meta name="theme-color" content="#E6F5FE">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -696,15 +696,45 @@
         .slug-status.taken { color: #dc2626; }
         .slug-status.checking { color: var(--text-dim); }
 
-        /* ===== CV Card — Paper Style ===== */
+        /* ===== CV Card — Stacked Paper Effect ===== */
+        .cv-paper-stack {
+            position: relative;
+            width: 100%;
+            max-width: 680px;
+        }
+
+        .cv-paper-stack::before,
+        .cv-paper-stack::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--surface);
+            border: 1px solid rgba(0,0,0,0.06);
+            border-radius: 4px;
+            z-index: -1;
+        }
+
+        .cv-paper-stack::before {
+            transform: rotate(-1.2deg) translateY(6px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .cv-paper-stack::after {
+            transform: rotate(0.8deg) translateY(3px);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+        }
+
         .cv-card {
+            position: relative;
             background: var(--surface);
             border: 1px solid rgba(0,0,0,0.06);
             border-radius: 4px;
             padding: 56px 52px;
             width: 100%;
-            max-width: 680px;
-            /* Multi-layer paper shadow like self.so */
+            z-index: 1;
             box-shadow:
                 0 1px 2px rgba(0,0,0,0.04),
                 0 2px 4px rgba(0,0,0,0.04),
@@ -971,6 +1001,206 @@
             padding: 4px 12px;
         }
 
+        /* ===== Preview Mockup ===== */
+        .preview-section {
+            margin-bottom: 48px;
+            text-align: center;
+            width: 100%;
+            max-width: 520px;
+        }
+
+        .preview-label {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-dim);
+            margin-top: 20px;
+            letter-spacing: 0.02em;
+        }
+
+        .preview-stack {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .preview-stack:hover {
+            transform: translateY(-4px);
+        }
+
+        .preview-stack::before,
+        .preview-stack::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            z-index: -1;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .preview-stack::before {
+            transform: rotate(-2deg) translateY(8px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .preview-stack::after {
+            transform: rotate(1.2deg) translateY(4px);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+        }
+
+        .preview-stack:hover::before {
+            transform: rotate(-3deg) translateY(10px);
+        }
+
+        .preview-stack:hover::after {
+            transform: rotate(2deg) translateY(6px);
+        }
+
+        .preview-card {
+            position: relative;
+            z-index: 1;
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            padding: 36px 32px;
+            text-align: left;
+            box-shadow:
+                0 1px 2px rgba(0,0,0,0.04),
+                0 4px 12px rgba(0,0,0,0.06);
+        }
+
+        .pv-divider {
+            height: 1px;
+            background: var(--border-light);
+            margin: 16px 0;
+        }
+
+        .pv-cv-header { margin-bottom: 0; }
+        .pv-cv-name {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text);
+            letter-spacing: -0.02em;
+            margin-bottom: 4px;
+        }
+        .pv-cv-tagline {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+        .pv-cv-location {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-dim);
+        }
+        .pv-cv-section { margin-bottom: 14px; }
+        .pv-cv-section:last-child { margin-bottom: 0; }
+        .pv-cv-section-title {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+        }
+        .pv-cv-text {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        .pv-cv-exp-item {
+            margin-bottom: 12px;
+        }
+        .pv-cv-exp-item:last-child { margin-bottom: 0; }
+        .pv-cv-exp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 8px;
+        }
+        .pv-cv-exp-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .pv-cv-exp-date {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-dim);
+            flex-shrink: 0;
+        }
+        .pv-cv-exp-company {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+        .pv-cv-exp-list {
+            padding-left: 16px;
+            margin: 0;
+        }
+        .pv-cv-exp-list li {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+        .pv-cv-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .pv-cv-pill {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 500;
+            background: var(--surface-dim);
+            color: var(--teal-dark);
+            border: 1px solid var(--border-light);
+            border-radius: 100px;
+            padding: 3px 10px;
+        }
+
+        /* CTA */
+        .landing-cta {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-sans);
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            background: linear-gradient(135deg, var(--teal) 0%, var(--teal-accent) 100%);
+            border: none;
+            border-radius: 12px;
+            padding: 16px 36px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 16px rgba(42, 131, 253, 0.3);
+        }
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(42, 131, 253, 0.4);
+        }
+        .cta-btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+        .cta-hint {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-dim);
+            margin-top: 12px;
+        }
+
         /* Footer */
         .site-footer {
             position: relative;
@@ -1234,6 +1464,7 @@
             body::before { display: none; }
             .top-bar, .action-bar, .site-footer, .landing, .modal-overlay, .publish-bar, .slug-editor { display: none !important; }
             .cv-wrapper { padding: 0; }
+            .cv-paper-stack::before, .cv-paper-stack::after { display: none; }
             .cv-card {
                 box-shadow: none;
                 border: none;
@@ -1259,6 +1490,8 @@
             .cv-exp-date { text-align: left; }
             .cv-edu-entry { flex-direction: column; gap: 2px; }
             .steps { flex-direction: column; gap: 12px; align-items: center; }
+            .preview-card { padding: 24px 20px; }
+            .preview-section { margin-top: 40px; }
             .upload-card { padding: 32px 24px; }
             .upload-zone { padding: 36px 20px; }
             .form-row { grid-template-columns: 1fr; }
@@ -1272,7 +1505,7 @@
 
 <!-- Top Nav Bar -->
 <div class="top-bar" id="topBar">
-    <div class="top-bar-brand">Pintarnya Free Tools</div>
+    <div class="top-bar-brand">Website CV</div>
     <div class="top-bar-right" id="topBarRight">
         <button class="top-bar-btn" id="topLoginBtn" style="display:none">Login</button>
     </div>
@@ -1312,12 +1545,73 @@
 <!-- ===== LANDING STATE ===== -->
 <div class="landing" id="landing">
     <div class="landing-header">
-        <div class="brand-badge">Pintarnya Free Tools</div>
-        <h1 class="landing-title">LinkedIn to<br><em>Website CV</em></h1>
+        <h1 class="landing-title">Your CV,<br><em>as a website</em></h1>
         <p class="landing-subtitle">Upload any CV or resume PDF and get a beautiful, hosted website in seconds. Free forever.</p>
     </div>
 
-    <div class="upload-card">
+    <!-- Sample CV preview -->
+    <div class="preview-section" id="previewSection">
+        <div class="preview-stack" id="previewStack">
+            <div class="preview-card">
+                <div class="pv-cv-header">
+                    <h3 class="pv-cv-name">Sarah Chen</h3>
+                    <p class="pv-cv-tagline">Product Manager &middot; AI &amp; Growth</p>
+                    <p class="pv-cv-location">Singapore</p>
+                </div>
+                <div class="pv-divider"></div>
+                <div class="pv-cv-section">
+                    <div class="pv-cv-section-title">About</div>
+                    <p class="pv-cv-text">Product leader with 6+ years of experience shipping AI-powered products at scale. Passionate about turning complex data into simple, delightful user experiences.</p>
+                </div>
+                <div class="pv-cv-section">
+                    <div class="pv-cv-section-title">Experience</div>
+                    <div class="pv-cv-exp-item">
+                        <div class="pv-cv-exp-header">
+                            <span class="pv-cv-exp-title">Senior Product Manager</span>
+                            <span class="pv-cv-exp-date">2022 — Present</span>
+                        </div>
+                        <div class="pv-cv-exp-company">Grab &middot; Singapore</div>
+                        <ul class="pv-cv-exp-list">
+                            <li>Led AI recommendation engine serving 40M+ users</li>
+                            <li>Increased conversion by 23% through personalization</li>
+                        </ul>
+                    </div>
+                    <div class="pv-cv-exp-item">
+                        <div class="pv-cv-exp-header">
+                            <span class="pv-cv-exp-title">Product Manager</span>
+                            <span class="pv-cv-exp-date">2019 — 2022</span>
+                        </div>
+                        <div class="pv-cv-exp-company">Tokopedia &middot; Jakarta</div>
+                        <ul class="pv-cv-exp-list">
+                            <li>Shipped search ranking improvements, +18% GMV</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="pv-cv-section">
+                    <div class="pv-cv-section-title">Skills</div>
+                    <div class="pv-cv-skills">
+                        <span class="pv-cv-pill">Product Strategy</span>
+                        <span class="pv-cv-pill">Machine Learning</span>
+                        <span class="pv-cv-pill">SQL</span>
+                        <span class="pv-cv-pill">A/B Testing</span>
+                        <span class="pv-cv-pill">Figma</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA button (shown when not logged in) -->
+    <div class="landing-cta" id="landingCta">
+        <button class="cta-btn" id="ctaBtn">
+            Get started — it's free
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+        <p class="cta-hint">No credit card. No sign-up wall. Just upload &amp; go.</p>
+    </div>
+
+    <!-- Upload card (hidden until logged in) -->
+    <div class="upload-card" id="uploadCard" style="display:none">
         <div class="upload-zone" id="uploadZone">
             <input type="file" accept=".pdf" class="upload-input" id="pdfInput">
             <div class="upload-icon">
@@ -1403,6 +1697,7 @@ Title | Company | Location | Dates
         <div class="step"><span class="step-num">2</span> Preview CV</div>
         <div class="step"><span class="step-num">3</span> Publish</div>
     </div>
+
 </div>
 
 <!-- ===== CV PREVIEW STATE ===== -->
@@ -1439,8 +1734,8 @@ Title | Company | Location | Dates
         <div class="slug-editor-inner">
             <span class="slug-prefix">pintarnya.site/cv/</span>
             <input type="text" class="slug-input" id="slugInput" placeholder="your-name" spellcheck="false" autocomplete="off">
-            <button class="slug-check-btn" id="slugCheckBtn">Check</button>
-            <button class="slug-check-btn" id="slugSaveBtn" style="background:var(--teal);color:white;display:none">Save</button>
+            <button class="slug-check-btn" id="slugCheckBtn">Save</button>
+            <button class="slug-check-btn" id="slugCopyBtn" style="background:transparent;color:var(--text-dim);border-color:var(--border);display:none">Copy</button>
         </div>
         <div class="slug-status" id="slugStatus"></div>
     </div>
@@ -1503,15 +1798,13 @@ Title | Company | Location | Dates
 
     <!-- Publish bar (shown after successful publish) -->
     <div class="publish-bar" id="publishBar">
-        <div class="publish-bar-inner">
-            <div class="publish-url" id="publishUrl"></div>
-            <button class="btn btn-ghost" id="copyUrlBtn" style="flex-shrink:0">Copy</button>
-        </div>
         <div class="publish-status" id="publishStatus"></div>
     </div>
 
-    <div class="cv-card" id="cvCard">
-        <!-- Populated by JS -->
+    <div class="cv-paper-stack">
+        <div class="cv-card" id="cvCard">
+            <!-- Populated by JS -->
+        </div>
     </div>
 </div>
 
@@ -1522,12 +1815,28 @@ Title | Company | Location | Dates
         <div class="modal-title" id="authModalTitle">Publish your CV</div>
         <div class="modal-subtitle" id="authModalSubtitle">Create a free account to host your CV at pintarnya.site/cv/your-name</div>
         <div class="modal-tabs">
-            <button class="modal-tab active" data-tab="register">Register</button>
+            <button class="modal-tab active" data-tab="magic">Email Link</button>
+            <button class="modal-tab" data-tab="register">Register</button>
             <button class="modal-tab" data-tab="login">Login</button>
         </div>
         <div class="auth-error" id="authError"></div>
 
-        <div class="auth-form active" id="registerForm">
+        <div class="auth-form active" id="magicForm">
+            <div class="form-group" id="magicEmailGroup">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-input" id="magicEmail" placeholder="you@email.com">
+            </div>
+            <button class="btn btn-primary" id="magicSendBtn" style="width:100%;justify-content:center;margin-top:16px">Send Login Link</button>
+            <div id="magicSentMsg" style="display:none;text-align:center;padding:20px 0;">
+                <div style="font-size:28px;margin-bottom:12px;">&#9993;</div>
+                <div style="font-family:var(--font-sans);font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px;">Check your email</div>
+                <div style="font-family:var(--font-mono);font-size:12px;color:var(--text-muted);line-height:1.6;">
+                    We sent a login link to <strong id="magicSentEmail"></strong>.<br>Click the link in the email to log in.
+                </div>
+            </div>
+        </div>
+
+        <div class="auth-form" id="registerForm">
             <div class="form-group">
                 <label class="form-label">Name</label>
                 <input type="text" class="form-input" id="authName" placeholder="Your full name">
@@ -1566,7 +1875,7 @@ Title | Company | Location | Dates
 
 <!-- Footer -->
 <footer class="site-footer">
-    Dibuat gratis oleh <a href="https://pintarnya.com" target="_blank" rel="noopener">Pintarnya</a> &mdash; platform karier Indonesia
+    Free &amp; open &mdash; no account required to generate
 </footer>
 
 <script>
@@ -1591,24 +1900,21 @@ Title | Company | Location | Dates
     const API_BASE = 'https://pintarnya.site/ai-api';
 
     const AI_PROXY_URL = API_BASE + '/parse-cv';
-    const AI_MODELS = [
-        'nvidia/nemotron-3-super-120b-a12b:free',
-        'google/gemma-3-27b-it:free',
-        'stepfun/step-3.5-flash:free',
-        'nousresearch/hermes-3-llama-3.1-405b:free',
-        'z-ai/glm-4.5-air:free'
-    ];
     const USE_AI = true;
 
     // ===== Top Bar Auth UI =====
     function updateTopBar() {
         const right = $('topBarRight');
+        const uploadCard = $('uploadCard');
+        const landingCta = $('landingCta');
         if (currentUser) {
             const displayName = currentUser.name || currentUser.email || 'User';
             right.innerHTML = `
                 <span class="top-bar-user">${esc(displayName)}</span>
                 <button class="top-bar-btn logout" id="topLogoutBtn">Logout</button>
             `;
+            if (uploadCard) uploadCard.style.display = '';
+            if (landingCta) landingCta.style.display = 'none';
             $('topLogoutBtn').addEventListener('click', () => {
                 authToken = null;
                 currentUser = null;
@@ -1617,9 +1923,11 @@ Title | Company | Location | Dates
             });
         } else {
             right.innerHTML = `<button class="top-bar-btn" id="topLoginBtn">Login</button>`;
+            if (uploadCard) uploadCard.style.display = 'none';
+            if (landingCta) landingCta.style.display = '';
             $('topLoginBtn').addEventListener('click', () => {
                 authPurpose = 'login';
-                $('authModalTitle').textContent = 'Login to Pintarnya';
+                $('authModalTitle').textContent = 'Login';
                 $('authModalSubtitle').textContent = 'Create an account or login to publish your CV';
                 openAuthModal();
             });
@@ -1646,6 +1954,26 @@ Title | Company | Location | Dates
         openAuthModal();
     }
 
+    // Preview stack click → trigger upload (if logged in) or auth modal
+    $('previewStack').addEventListener('click', () => {
+        if (isLoggedIn()) {
+            pdfInput.click();
+        } else {
+            authPurpose = 'login';
+            $('authModalTitle').textContent = 'Login to get started';
+            $('authModalSubtitle').textContent = 'Create a free account to build your website CV';
+            openAuthModal();
+        }
+    });
+
+    // CTA button click → open auth modal
+    $('ctaBtn').addEventListener('click', () => {
+        authPurpose = 'login';
+        $('authModalTitle').textContent = 'Login to get started';
+        $('authModalSubtitle').textContent = 'Create a free account to build your website CV';
+        openAuthModal();
+    });
+
     // Drag and drop
     uploadZone.addEventListener('dragover', e => {
         e.preventDefault();
@@ -1668,13 +1996,17 @@ Title | Company | Location | Dates
     });
 
     pdfInput.addEventListener('change', e => {
+        console.log('[INPUT] file input changed, files:', e.target.files.length);
         if (e.target.files[0]) {
             const file = e.target.files[0];
+            console.log('[INPUT] file:', file.name, file.type, file.size);
+            console.log('[INPUT] isLoggedIn:', isLoggedIn(), 'authToken:', !!authToken);
             if (!isLoggedIn()) {
+                console.log('[INPUT] Not logged in, requiring auth...');
                 requireAuthForUpload(file);
-                // Reset input so same file can be re-selected
                 pdfInput.value = '';
             } else {
+                console.log('[INPUT] Logged in, calling handlePDF...');
                 handlePDF(file);
             }
         }
@@ -1729,9 +2061,10 @@ Title | Company | Location | Dates
         // Serialize experience back to text
         $('eExperience').value = (parsedData.experience || []).map(exp => {
             let line = [exp.title, exp.company, exp.location, exp.dates].filter(Boolean).join(' | ');
-            if (exp.description) {
-                const bullets = exp.description.split('\n').map(l => l.trim()).filter(Boolean);
-                line += '\n' + bullets.map(b => b.startsWith('-') ? b : '- ' + b).join('\n');
+            const bullets = Array.isArray(exp.achievements) ? exp.achievements :
+                (exp.description ? exp.description.split(/\n|(?=- )/).map(s => s.replace(/^-\s*/, '').trim()).filter(Boolean) : []);
+            if (bullets.length) {
+                line += '\n' + bullets.map(b => '- ' + b).join('\n');
             }
             return line;
         }).join('\n\n');
@@ -1785,82 +2118,86 @@ Title | Company | Location | Dates
     });
 
     // ===== Slug Editor =====
-    $('slugCheckBtn').addEventListener('click', checkSlug);
-    $('slugSaveBtn').addEventListener('click', saveSlugChange);
+    $('slugCheckBtn').addEventListener('click', handleSlugSave);
 
     $('slugInput').addEventListener('input', () => {
         let val = $('slugInput').value.toLowerCase().replace(/[^a-z0-9-]/g, '').replace(/--+/g, '-');
         $('slugInput').value = val;
         $('slugStatus').textContent = '';
         $('slugStatus').className = 'slug-status';
-        $('slugSaveBtn').style.display = 'none';
     });
 
-    async function checkSlug() {
+    // Copy URL button
+    $('slugCopyBtn').addEventListener('click', () => {
+        if (!publishedSlug) return;
+        const url = 'https://pintarnya.site/cv/' + publishedSlug;
+        navigator.clipboard.writeText(url).then(() => {
+            $('slugCopyBtn').textContent = 'Copied!';
+            setTimeout(() => $('slugCopyBtn').textContent = 'Copy', 2000);
+        });
+    });
+
+    function updateSlugCopyBtn() {
+        $('slugCopyBtn').style.display = publishedSlug ? '' : 'none';
+    }
+
+    async function handleSlugSave() {
         const slug = $('slugInput').value.trim();
         if (!slug) {
             $('slugStatus').textContent = 'Enter a slug first';
             $('slugStatus').className = 'slug-status taken';
             return;
         }
-        $('slugStatus').textContent = 'Checking...';
-        $('slugStatus').className = 'slug-status checking';
+
+        // If slug unchanged from published, nothing to do
+        if (publishedSlug && slug === publishedSlug) {
+            $('slugStatus').textContent = 'This is already your current address';
+            $('slugStatus').className = 'slug-status available';
+            return;
+        }
+
         $('slugCheckBtn').disabled = true;
+        $('slugCheckBtn').textContent = 'Checking...';
 
         try {
-            let url = API_BASE + '/cv/check/' + encodeURIComponent(slug);
-            if (currentUser) url += '?userId=' + currentUser.id;
-            const res = await fetch(url);
-            const data = await res.json();
-            if (data.available) {
-                $('slugStatus').textContent = 'Available';
-                $('slugStatus').className = 'slug-status available';
-                // Show save button if slug differs from published
-                if (publishedSlug && slug !== publishedSlug) {
-                    $('slugSaveBtn').style.display = '';
-                }
-            } else {
+            // Step 1: Check availability
+            let checkUrl = API_BASE + '/cv/check/' + encodeURIComponent(slug);
+            if (currentUser) checkUrl += '?userId=' + (currentUser._id || currentUser.id);
+            const checkRes = await fetch(checkUrl);
+            const checkData = await checkRes.json();
+
+            if (!checkData.available) {
                 $('slugStatus').textContent = 'Taken — try another';
                 $('slugStatus').className = 'slug-status taken';
-                $('slugSaveBtn').style.display = 'none';
+                return;
             }
-        } catch (err) {
-            $('slugStatus').textContent = 'Could not check — try again';
-            $('slugStatus').className = 'slug-status taken';
-        } finally {
-            $('slugCheckBtn').disabled = false;
-        }
-    }
 
-    async function saveSlugChange() {
-        if (!authToken || !publishedSlug) return;
-        const newSlug = $('slugInput').value.trim();
-        if (!newSlug || newSlug === publishedSlug) return;
+            // Step 2: If already published, update the slug
+            if (publishedSlug && authToken) {
+                $('slugCheckBtn').textContent = 'Saving...';
+                const res = await fetch(API_BASE + '/cv/' + publishedSlug, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authToken },
+                    body: JSON.stringify({ slug })
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.error || 'Failed to change slug');
 
-        $('slugSaveBtn').disabled = true;
-        $('slugSaveBtn').textContent = 'Saving...';
-
-        try {
-            const res = await fetch(API_BASE + '/cv/' + publishedSlug, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authToken },
-                body: JSON.stringify({ slug: newSlug })
-            });
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.error || 'Failed to change slug');
-
-            publishedSlug = data.slug;
-            const fullUrl = 'https://pintarnya.site/cv/' + data.slug;
-            $('publishUrl').innerHTML = `<a href="${fullUrl}" target="_blank">${fullUrl}</a>`;
-            $('slugStatus').textContent = 'Saved! Address updated.';
-            $('slugStatus').className = 'slug-status available';
-            $('slugSaveBtn').style.display = 'none';
+                publishedSlug = data.slug;
+                $('slugStatus').textContent = 'Saved! Address updated.';
+                $('slugStatus').className = 'slug-status available';
+                updateSlugCopyBtn();
+            } else {
+                // Not yet published — just show availability
+                $('slugStatus').textContent = 'Available! Publish to claim it.';
+                $('slugStatus').className = 'slug-status available';
+            }
         } catch (err) {
             $('slugStatus').textContent = err.message;
             $('slugStatus').className = 'slug-status taken';
         } finally {
-            $('slugSaveBtn').disabled = false;
-            $('slugSaveBtn').textContent = 'Save';
+            $('slugCheckBtn').disabled = false;
+            $('slugCheckBtn').textContent = 'Save';
         }
     }
 
@@ -1946,103 +2283,136 @@ Title | Company | Location | Dates
         }
     }
 
-    // PDF Processing
+    // PDF Processing — extract text + images, send both to Gemini
     async function handlePDF(file) {
+        console.log('[1] handlePDF called, file:', file.name, file.size, file.type);
         loading.classList.add('active');
         errorMsg.classList.remove('active');
         $('loadingBar').style.width = '0%';
         startLoadingAnimation();
 
         try {
+            console.log('[2] Reading file as ArrayBuffer...');
             const arrayBuffer = await file.arrayBuffer();
-            const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-            let fullText = '';
+            console.log('[3] ArrayBuffer ready, size:', arrayBuffer.byteLength);
 
-            for (let i = 1; i <= pdf.numPages; i++) {
+            console.log('[4] Loading PDF with pdf.js...');
+            const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+            const maxPages = Math.min(pdf.numPages, 5);
+            console.log('[5] PDF loaded, pages:', pdf.numPages, 'processing:', maxPages);
+
+            const textPages = [];
+            const images = [];
+
+            for (let i = 1; i <= maxPages; i++) {
+                console.log(`[6-${i}] Getting page ${i}...`);
                 const page = await pdf.getPage(i);
+
+                console.log(`[7-${i}] Extracting text...`);
                 const content = await page.getTextContent();
                 const pageText = content.items.map(item => item.str).join(' ');
-                fullText += pageText + '\n';
+                textPages.push(pageText);
+                console.log(`[7-${i}] Text: ${pageText.length} chars`);
+
+                console.log(`[8-${i}] Rendering to image...`);
+                const viewport = page.getViewport({ scale: 1.5 });
+                const canvas = document.createElement('canvas');
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+                const ctx = canvas.getContext('2d');
+                await page.render({ canvasContext: ctx, viewport }).promise;
+                const base64 = canvas.toDataURL('image/jpeg', 0.8).split(',')[1];
+                images.push({ mimeType: 'image/jpeg', data: base64 });
+                console.log(`[8-${i}] Image: ${(base64.length / 1024 / 1024).toFixed(2)} MB`);
             }
 
-            if (USE_AI) {
-                parsedData = await parseWithAI(fullText);
-            } else {
-                parsedData = parseLinkedInPDF(fullText);
-            }
+            const fullText = textPages.join('\n');
+            console.log(`[9] Total — Text: ${fullText.length} chars, Images: ${images.length}`);
+
+            console.log('[10] Calling parseWithAI...');
+            parsedData = await parseWithAI(fullText, images);
+            console.log('[11] parseWithAI returned:', parsedData ? parsedData.name : 'NULL');
 
             if (!parsedData.name) parsedData.name = 'Your Name';
 
             stopLoadingAnimation();
             await new Promise(r => setTimeout(r, 500));
 
+            console.log('[12] Rendering CV...');
             renderCV(parsedData);
             loading.classList.remove('active');
             showCV();
+            console.log('[13] Done!');
         } catch (err) {
+            console.error('[ERROR] handlePDF failed at:', err.message);
+            console.error('[ERROR] Stack:', err.stack);
             stopLoadingAnimation();
             loading.classList.remove('active');
             showError(err.message || 'Failed to parse PDF. Try the manual form.');
         }
     }
 
-    // AI-powered parsing via server-side proxy
-    async function parseWithAI(text) {
-        for (const model of AI_MODELS) {
-            try {
-                console.log(`Trying model: ${model}`);
-                const res = await fetch(AI_PROXY_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ text: text.substring(0, 8000), model })
-                });
+    // AI-powered parsing via Gemini 2.5 Flash (text + images)
+    async function parseWithAI(text, images) {
+        try {
+            const bodySize = JSON.stringify({ text: text.substring(0, 12000), images: images || [] }).length;
+            console.log('[AI] Calling API, body size:', (bodySize / 1024 / 1024).toFixed(2), 'MB');
+            console.log('[AI] URL:', AI_PROXY_URL);
+            const res = await fetch(AI_PROXY_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...(authToken ? { 'Authorization': `Bearer ${authToken}` } : {})
+                },
+                body: JSON.stringify({
+                    text: text.substring(0, 12000),
+                    images: images || []
+                })
+            });
 
-                if (res.status === 429) {
-                    showError('Rate limited. Please wait a moment and try again.');
-                    return parseLinkedInPDF(text);
-                }
+            console.log('[AI] Response status:', res.status);
 
-                if (!res.ok) {
-                    console.warn(`Model ${model} returned ${res.status}, trying next...`);
-                    continue;
-                }
-
-                const json = await res.json();
-                const content = json.choices?.[0]?.message?.content || '';
-
-                const jsonMatch = content.match(/\{[\s\S]*\}/);
-                if (!jsonMatch) {
-                    console.warn(`Model ${model} returned no JSON, trying next...`);
-                    continue;
-                }
-
-                const parsed = JSON.parse(jsonMatch[0]);
-
-                if (!parsed.name) {
-                    console.warn(`Model ${model} returned empty name, trying next...`);
-                    continue;
-                }
-
-                console.log(`Success with model: ${model}`);
-                return {
-                    name: parsed.name || '',
-                    tagline: parsed.tagline || '',
-                    location: parsed.location || '',
-                    email: parsed.email || '',
-                    linkedin: parsed.linkedin || '',
-                    summary: parsed.summary || '',
-                    experience: Array.isArray(parsed.experience) ? parsed.experience : [],
-                    education: Array.isArray(parsed.education) ? parsed.education : [],
-                    skills: Array.isArray(parsed.skills) ? parsed.skills : []
-                };
-            } catch (err) {
-                console.warn(`Model ${model} error:`, err.message);
-                continue;
+            if (res.status === 429) {
+                console.error('[AI] Rate limited!');
+                throw new Error('Rate limited. Please wait a moment and try again.');
             }
-        }
 
-        console.warn('All AI models failed, falling back to regex parser');
-        return parseLinkedInPDF(text);
+            if (res.status === 413) {
+                console.error('[AI] Payload too large!');
+                throw new Error('PDF is too large. Try a shorter document (max 3 pages).');
+            }
+
+            if (!res.ok) {
+                const errText = await res.text();
+                console.error('[AI] API error:', res.status, errText);
+                throw new Error('AI parsing failed (error ' + res.status + '). Please try again.');
+            }
+
+            const json = await res.json();
+            console.log('[AI] Response body:', JSON.stringify(json).substring(0, 500));
+            const parsed = json.cvData;
+
+            if (!parsed || !parsed.name) {
+                console.warn('[AI] Empty data. parsed:', parsed);
+                throw new Error('AI could not extract CV data. Try a different PDF format.');
+            }
+
+            console.log('[AI] Success! Name:', parsed.name);
+            return {
+                name: parsed.name || '',
+                tagline: parsed.tagline || '',
+                location: parsed.location || '',
+                email: parsed.email || '',
+                linkedin: parsed.linkedin || '',
+                summary: parsed.summary || '',
+                experience: Array.isArray(parsed.experience) ? parsed.experience : [],
+                education: Array.isArray(parsed.education) ? parsed.education : [],
+                skills: Array.isArray(parsed.skills) ? parsed.skills : []
+            };
+        } catch (err) {
+            console.warn('AI parse error:', err.message);
+            return parseLinkedInPDF(text);
+        }
     }
 
     // LinkedIn PDF Parser (regex fallback)
@@ -2216,7 +2586,7 @@ Title | Company | Location | Dates
                 company: headerParts[1] || '',
                 location: headerParts[2] || '',
                 dates: headerParts[3] || '',
-                description: lines.slice(1).map(l => l.replace(/^[-\u2022]\s*/, '')).join('\n')
+                achievements: lines.slice(1).map(l => l.replace(/^[-\u2022]\s*/, '').trim()).filter(Boolean)
             };
         }).filter(Boolean);
     }
@@ -2248,15 +2618,17 @@ Title | Company | Location | Dates
         let expHTML = '';
         for (const exp of data.experience) {
             const locationBadge = exp.location ? `<span class="cv-exp-location-badge">${esc(exp.location)}</span>` : '';
-            // Build description as bullet list
+            // Build achievements as bullet list
             let descHTML = '';
-            if (exp.description) {
-                const descLines = exp.description.split('\n').map(l => l.trim()).filter(Boolean);
-                if (descLines.length > 1 || (descLines.length === 1 && descLines[0].length < 200)) {
-                    descHTML = '<div class="cv-exp-desc"><ul>' + descLines.map(l => `<li>${esc(l)}</li>`).join('') + '</ul></div>';
-                } else {
-                    descHTML = `<div class="cv-exp-desc">${esc(exp.description)}</div>`;
-                }
+            let items = [];
+            if (Array.isArray(exp.achievements) && exp.achievements.length > 0) {
+                items = exp.achievements;
+            } else if (exp.description) {
+                // Legacy: split by newline or "- " pattern
+                items = exp.description.split(/\n|(?=- )/).map(s => s.replace(/^-\s*/, '').trim()).filter(Boolean);
+            }
+            if (items.length > 0) {
+                descHTML = '<div class="cv-exp-desc"><ul>' + items.map(a => `<li>${esc(a)}</li>`).join('') + '</ul></div>';
             }
             expHTML += `
                 <div class="cv-exp-entry">
@@ -2296,7 +2668,6 @@ Title | Company | Location | Dates
                     </div>` : ''}
                     ${contactsHTML ? `<div class="cv-contacts">${contactsHTML}</div>` : ''}
                 </div>
-                <div class="cv-avatar">${initials}</div>
             </div>
 
             ${data.summary ? `
@@ -2345,14 +2716,88 @@ Title | Company | Location | Dates
         tab.addEventListener('click', () => {
             document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
+            $('magicForm').classList.toggle('active', tab.dataset.tab === 'magic');
             $('registerForm').classList.toggle('active', tab.dataset.tab === 'register');
             $('loginForm').classList.toggle('active', tab.dataset.tab === 'login');
             authError.classList.remove('active');
         });
     });
 
-    $('authClose').addEventListener('click', () => authModal.classList.remove('active'));
-    authModal.addEventListener('click', e => { if (e.target === authModal) authModal.classList.remove('active'); });
+    function closeAuthModal() {
+        authModal.classList.remove('active');
+        // Reset magic form state
+        $('magicEmailGroup').style.display = '';
+        $('magicSendBtn').style.display = '';
+        $('magicSentMsg').style.display = 'none';
+        $('magicSendBtn').disabled = false;
+        $('magicSendBtn').textContent = 'Send Login Link';
+    }
+    $('authClose').addEventListener('click', closeAuthModal);
+    authModal.addEventListener('click', e => { if (e.target === authModal) closeAuthModal(); });
+
+    // Magic link send
+    $('magicSendBtn').addEventListener('click', async () => {
+        const email = $('magicEmail').value.trim();
+        if (!email) return showAuthError('Please enter your email');
+
+        $('magicSendBtn').disabled = true;
+        $('magicSendBtn').textContent = 'Sending...';
+        authError.classList.remove('active');
+
+        try {
+            const res = await fetch(API_BASE + '/auth/magic-link', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || 'Failed to send link');
+
+            // Show success state
+            $('magicEmailGroup').style.display = 'none';
+            $('magicSendBtn').style.display = 'none';
+            $('magicSentEmail').textContent = email;
+            $('magicSentMsg').style.display = '';
+        } catch (err) {
+            showAuthError(err.message);
+            $('magicSendBtn').disabled = false;
+            $('magicSendBtn').textContent = 'Send Login Link';
+        }
+    });
+
+    // Handle magic link token from URL (?magic=TOKEN)
+    async function handleMagicToken() {
+        const params = new URLSearchParams(window.location.search);
+        const token = params.get('magic');
+        if (!token) return;
+
+        // Clean URL
+        window.history.replaceState({}, '', window.location.pathname);
+
+        try {
+            const res = await fetch(API_BASE + '/auth/magic-link/verify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ token })
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || 'Invalid or expired link');
+
+            authToken = data.token;
+            currentUser = data.user;
+            localStorage.setItem('pintarnya_cv_token', authToken);
+            updateTopBar();
+            console.log('[AUTH] Magic link login successful for', currentUser.email);
+        } catch (err) {
+            console.error('[AUTH] Magic link verification failed:', err.message);
+            // Show auth modal with error
+            $('authModalTitle').textContent = 'Link expired';
+            $('authModalSubtitle').textContent = 'Please request a new login link';
+            openAuthModal();
+            showAuthError(err.message);
+        }
+    }
+    handleMagicToken();
 
     // After successful auth, process pending file if any
     function onAuthSuccess() {
@@ -2499,13 +2944,12 @@ Title | Company | Location | Dates
             if (!res.ok) throw new Error(data.error || 'Publish failed');
 
             publishedSlug = data.slug;
-            const fullUrl = 'https://pintarnya.site/cv/' + data.slug;
-            $('publishUrl').innerHTML = `<a href="${fullUrl}" target="_blank">${fullUrl}</a>`;
             publishStatus.textContent = 'Published! Your CV is live.';
             publishStatus.className = 'publish-status success';
 
             // Update slug input to reflect published slug
             $('slugInput').value = data.slug;
+            updateSlugCopyBtn();
 
             $('publishBtn').innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> Update CV`;
         } catch (err) {
@@ -2514,18 +2958,9 @@ Title | Company | Location | Dates
         }
     }
 
-    // Copy URL button
-    $('copyUrlBtn').addEventListener('click', () => {
-        if (!publishedSlug) return;
-        const url = 'https://pintarnya.site/cv/' + publishedSlug;
-        navigator.clipboard.writeText(url).then(() => {
-            $('copyUrlBtn').textContent = 'Copied!';
-            setTimeout(() => $('copyUrlBtn').textContent = 'Copy', 2000);
-        });
-    });
-
     // Check auth on page load — load existing CV if user has one
     async function checkAuth() {
+        console.log('[AUTH] checkAuth called, token:', authToken ? authToken.substring(0, 20) + '...' : 'none');
         if (!authToken) {
             updateTopBar();
             return;
@@ -2534,8 +2969,10 @@ Title | Company | Location | Dates
             const res = await fetch(API_BASE + '/auth/me', {
                 headers: { 'Authorization': 'Bearer ' + authToken }
             });
+            console.log('[AUTH] /auth/me status:', res.status);
             if (!res.ok) throw new Error();
             const data = await res.json();
+            console.log('[AUTH] user:', data.user?.email, 'has CV:', !!data.cv, 'cv name:', data.cv?.cvData?.name);
             currentUser = data.user;
             if (data.cv) {
                 publishedSlug = data.cv.slug;
@@ -2545,8 +2982,7 @@ Title | Company | Location | Dates
                     renderCV(parsedData);
                     showCV();
                     $('slugInput').value = publishedSlug;
-                    const fullUrl = 'https://pintarnya.site/cv/' + publishedSlug;
-                    $('publishUrl').innerHTML = `<a href="${fullUrl}" target="_blank">${fullUrl}</a>`;
+                    updateSlugCopyBtn();
                     $('publishBar').classList.add('active');
                     $('publishStatus').textContent = 'Your CV is live.';
                     $('publishStatus').className = 'publish-status success';
